@@ -13,7 +13,7 @@ var PORT = process.env.PORT || 3000;
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-// Star Wars Characters (DATA)
+// Restaurant data
 // =============================================================
 var restaurant = [
   {
@@ -41,7 +41,7 @@ app.get("/all", function(req, res) {
   res.sendFile(path.join(__dirname, "all.html"));
 });
 
-// Displays all characters
+// Displays all reservations
 app.get("/api/restaurant", function(req, res) {
   return res.json(restaurant);
 });
@@ -60,12 +60,13 @@ app.get("/api/restaurant/:reservation", function(req, res) {
   return res.json(false);
 });
 
-// Create New Characters - takes in JSON input
+// Create New reservation, takes in json input
 app.post("/api/restaurant", function(req, res) {
   // req.body hosts is equal to the JSON post sent from the user
   // This works because of our body-parser middleware
   var newreservation = req.body;
 
+  // New reservation
   // Using a RegEx Pattern to remove spaces from newCharacter
   // You can read more about RegEx Patterns later https://www.regexbuddy.com/regex.html
   newreservation.routeName = newreservation.name.replace(/\s+/g, "").toLowerCase();

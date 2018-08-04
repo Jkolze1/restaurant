@@ -65,10 +65,10 @@
   </div>
 
   <script type="text/javascript">
-    // Question: What does this code do?
+    // Adds button
     $("#add-btn").on("click", function(event) {
       event.preventDefault();
-
+    // New reservation
       var newReservation = {
         name: $("#name").val().trim(),
         phone: $("#phone").val().trim(),
@@ -76,7 +76,7 @@
         uniqueID: $("#uniqueID").val().trim()
       };
 
-      // Question: What does this code do??
+      // Post 
       $.post("/api/restaurant", newReservation)
         .then(function(data) {
           console.log(data);
