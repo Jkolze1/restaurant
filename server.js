@@ -57,7 +57,6 @@ app.get("/api/restaurant/:reservation", function(req, res) {
       return res.json(restaurant[i]);
     }
   }
-
   return res.json(false);
 });
 
@@ -73,7 +72,7 @@ app.post("/api/restaurant", function(req, res) {
 
   console.log(newreservation);
 
-  characters.push(newreservation);
+  restaurant.push(newreservation);
 
   res.json(newreservation);
 });
