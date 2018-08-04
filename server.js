@@ -15,27 +15,13 @@ app.use(bodyParser.json());
 
 // Star Wars Characters (DATA)
 // =============================================================
-var characters = [
+var restaurant = [
   {
-    routeName: "yoda",
-    name: "Yoda",
-    role: "Jedi Master",
-    age: 900,
-    forcePoints: 2000
-  },
-  {
-    routeName: "darthmaul",
-    name: "Darth Maul",
-    role: "Sith Lord",
-    age: 200,
-    forcePoints: 1200
-  },
-  {
-    routeName: "obiwankenobi",
-    name: "Obi Wan Kenobi",
-    role: "Jedi Master",
-    age: 55,
-    forcePoints: 1350
+    routeName: "alex",
+    name: "Alex",
+    phone: "###-###-####",
+    email: "test@gmail.com",
+    uniqueID: 1
   }
 ];
 
@@ -56,40 +42,39 @@ app.get("/all", function(req, res) {
 });
 
 // Displays all characters
-app.get("/api/characters", function(req, res) {
-  return res.json(characters);
+app.get("/api/restaurant", function(req, res) {
+  return res.json(restaurant);
 });
 
 // Displays a single character, or returns false
-app.get("/api/characters/:character", function(req, res) {
-  var chosen = req.params.character;
+app.get("/api/restaurant/:reservation", function(req, res) {
+  var chosen = req.params.reservation;
 
   console.log(chosen);
 
-  for (var i = 0; i < characters.length; i++) {
-    if (chosen === characters[i].routeName) {
-      return res.json(characters[i]);
+  for (var i = 0; i < restaurant.length; i++) {
+    if (chosen === restaurant[i].routeName) {
+      return res.json(restaurant[i]);
     }
   }
-
   return res.json(false);
 });
 
 // Create New Characters - takes in JSON input
-app.post("/api/characters", function(req, res) {
+app.post("/api/restaurant", function(req, res) {
   // req.body hosts is equal to the JSON post sent from the user
   // This works because of our body-parser middleware
-  var newcharacter = req.body;
+  var newreservation = req.body;
 
   // Using a RegEx Pattern to remove spaces from newCharacter
   // You can read more about RegEx Patterns later https://www.regexbuddy.com/regex.html
-  newcharacter.routeName = newcharacter.name.replace(/\s+/g, "").toLowerCase();
+  newreservation.routeName = newreservation.name.replace(/\s+/g, "").toLowerCase();
 
-  console.log(newcharacter);
+  console.log(newreservation);
 
-  characters.push(newcharacter);
+  restaurant.push(newreservation);
 
-  res.json(newcharacter);
+  res.json(newreservation);
 });
 
 // Starts the server to begin listening

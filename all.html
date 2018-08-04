@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8">
-    <title>Star Wars - Express</title>
+    <title>Restaurant</title>
     <!-- Latest compiled and minified CSS & JS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -42,9 +42,7 @@
             Reservations
           </div>
           <div class="card-body">
-            <h5 class="card-title">Special title treatment</h5>
-            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-            <a href="#" class="btn btn-primary">Go somewhere</a>
+            <div id="well-section"></div>
           </div>
         </div>
 
@@ -55,9 +53,7 @@
             Waitlist
           </div>
           <div class="card-body">
-            <h5 class="card-title">Special title treatment</h5>
-            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-            <a href="#" class="btn btn-primary">Go somewhere</a>
+
           </div>
         </div>
 
@@ -68,17 +64,14 @@
 
   <script type="text/javascript">
 
-    $.get("/api/characters", function(data) {
+    $.get("/api/restaurant", function(data) {
       for (var i = 0; i < data.length; i++) {
         var wellSection = $("<div>");
         wellSection.addClass("well");
         wellSection.attr("id", "character-well-" + i);
         $("#well-section").append(wellSection);
-
-        $("#character-well-" + i).append("<h2>" + data[i].name + "</h2>");
-        $("#character-well-" + i).append("<h3>Role: " + data[i].role + "</h4>");
-        $("#character-well-" + i).append("<h3>Age: " + data[i].age + "</h4>");
-        $("#character-well-" + i).append("<h3>Force Points: " + data[i].forcePoints + "</h4>");
+          
+        $("#character-well-" + i).append(data[i].uniqueID);
       }
     });
   </script>
