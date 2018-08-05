@@ -76,7 +76,7 @@
         uniqueID: $("#uniqueID").val().trim()
       };
 
-      // Question: What does this code do??
+   
       $.post("/api/restaurant", newReservation)
         .then(function(data) {
           console.log(data);

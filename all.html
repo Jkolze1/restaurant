@@ -27,22 +27,12 @@
 
       <div class="col-lg-12">
 
-        <!-- <div class="panel panel-default">
-          <div class="panel-heading">
-            <h3 class="panel-title"><strong>Character Database</strong></h3>
-          </div>
-          <div class="panel-body" id="well-section">
-
-          </div>
-        </div> -->
-      
-
         <div class="card">
           <div class="card-header">
             Reservations
           </div>
           <div class="card-body">
-            <div id="well-section"></div>
+            <div id="table-section"></div>
           </div>
         </div>
 
@@ -53,7 +43,7 @@
             Waitlist
           </div>
           <div class="card-body">
-
+            <div id="waitlist-section"></div>
           </div>
         </div>
 
@@ -63,17 +53,31 @@
   </div>
 
   <script type="text/javascript">
+ 
+  let displayTables = () => {
 
     $.get("/api/restaurant", function(data) {
-      for (var i = 0; i < data.length; i++) {
+      for (var i = 0; i < 5; i++) {
         var wellSection = $("<div>");
         wellSection.addClass("well");
-        wellSection.attr("id", "character-well-" + i);
-        $("#well-section").append(wellSection);
-          
-        $("#character-well-" + i).append(data[i].uniqueID);
+        wellSection.attr("id", "table-well-" + i);
+        $("#table-section").append(wellSection);
+        $("#table-well-" + i).append(data[i].uniqueID); 
       }
+      for (var i = 5; i < data.length; i++) {
+        var wellwaitSection = $("<div>");
+          wellwaitSection.addClass("well");
+          wellwaitSection.attr("id", "table-well-" + i);
+          $("#waitlist-section").append(wellwaitSection);
+          $("#table-well-" + i).append(data[i].uniqueID); 
+        }
     });
+
+  };
+
+  displayTables();
+
+
   </script>
   
 </body>
