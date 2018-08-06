@@ -25,7 +25,7 @@ app.get("/all", (req, res) => {
 });
 
 app.post("/reservation", (req, res) => {
-  var reservation = req.body;
+  let reservation = req.body;
   reservations.push(reservation);
   if (reservations.length <= 5){
       res.send(true);

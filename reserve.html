@@ -75,7 +75,7 @@
       // In this case the associated code "saves" the data to the table-data.js file or waitinglist-data.js file
       $(".submit").on("click", () => {
         // Here we grab the form elements
-        var newReservation = {
+        const newReservation = {
           customerName: $('#name').val().trim(),
           phoneNumber: $('#phone').val().trim(),
           customerEmail: $('#email').val().trim(),
@@ -87,7 +87,7 @@
         // depending on if a tables is available or not.
         // Here we get the location of the root page.
         // We use this instead of explicitly saying the URL is localhost:3001 because the url will change when we deploy.
-        var currentURL = window.location.origin;
+        const currentURL = window.location.origin;
         $.post(currentURL + "/reservation", newReservation,
           (data) => {
             console.log(data);
