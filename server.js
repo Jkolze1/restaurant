@@ -1,13 +1,10 @@
-// Dependencies
 const express = require("express");
 const bodyParser = require("body-parser");
 const path = require("path");
 
-// Sets up the Express App
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Sets up the Express app to handle data parsing
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
@@ -15,7 +12,6 @@ app.use(bodyParser.json());
 const reservations = [];
 
 // Routes
-
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "index.html"));
 });
@@ -28,8 +24,7 @@ app.get("/all", (req, res) => {
   res.sendFile(path.join(__dirname, "all.html"));
 });
 
-
-app.post("/reservation", (req, res ) => {
+app.post("/reservation", (req, res) => {
   var reservation = req.body;
   reservations.push(reservation);
   if (reservations.length <= 5){
@@ -40,7 +35,7 @@ app.post("/reservation", (req, res ) => {
   }
 });
 
-app.get ("/tables", ( req, res) => {
+app.get ("/tables", (req, res) => {
   // Array for 5 available tables
   const tables = [];
   for (let i = 0; i < 5 && i < reservations.length; i++) {
@@ -62,8 +57,8 @@ app.post("/clear", (req,res) => {
   console.log("clearing");
   reservations = [];
 });
-// Listener
 
+// Listener
 app.listen(PORT, () => {
   console.log("App listening on PORT" + PORT);
 });
