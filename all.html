@@ -52,31 +52,67 @@
     
   </div>
 
-  <script type="text/javascript">
- 
-  let displayTables = () => {
+<script type="text/javascript">
+	// In this code, jQuery is used to "download" the data from our server
+	// We then dynamically display this content in our table. This is very similar to the group projects you just completed.
+	// It's also very similar to the NYT search application. In fact, I copied a ton of code from there.
+	const runTables = () => {
+		// Here we get the location of the root page.
+		// We use this instead of explicitly saying the URL is localhost:3001 because the url will change when we deploy.
+		const currentURL = window.location.origin;
+		// The AJAX function uses the URL of our API to GET the data associated with it (initially set to localhost)
+		$.ajax({ url: currentURL + "/tables", method: "GET" })
+			.done( (tableData) => {
+				// Loop through and display each of the customers
+				for (let i = 0; i < tableData.length; i++) {
+					// Create the HTML Well (Section) and Add the table content for each reserved table
+					let tableSection = $("<div>");
+					tableSection.addClass('well');
+					tableSection.attr('id', 'tableWell-' + i + 1)
+					$('#table-section').append(tableSection);
+					let tableNumber = i + 1;
+					$("#tableWell-" + i + 1).append('<h2><span class="label label-primary">' + tableNumber + "</span> | " + tableData[i].customerID + "</h2>");
+				}
+			});
+	}
+	const runWaitlist = () => {
+		// Here we get the location of the root page.
+		// We use this instead of explicitly saying the URL is localhost:3001 because the url will change when we deploy.
+		const currentURL = window.location.origin;
+		// The AJAX function uses the URL of our API to GET the data associated with it (initially set to localhost)
+		$.ajax({ url: currentURL + "/waitlist", method: "GET" })
+			.done( (waitlistData) => {
 
-    $.get("/api/restaurant", function(data) {
-      for (var i = 0; i < 5; i++) {
-        var wellSection = $("<div>");
-        wellSection.addClass("well");
-        wellSection.attr("id", "table-well-" + i);
-        $("#table-section").append(wellSection);
-        $("#table-well-" + i).append(data[i].uniqueID); 
-      }
-      for (var i = 5; i < data.length; i++) {
-        var wellwaitSection = $("<div>");
-          wellwaitSection.addClass("well");
-          wellwaitSection.attr("id", "table-well-" + i);
-          $("#waitlist-section").append(wellwaitSection);
-          $("#table-well-" + i).append(data[i].uniqueID); 
-        }
-    });
-
-  };
-
-  displayTables();
-
+				// Loop through and display each of the customers
+				for (let i = 0; i < waitlistData.length; i++) {
+					// Create the HTML Well (Section) and Add the table content for each reserved table
+					let waitlistSection = $("<div>");
+					waitlistSection.addClass('well');
+					waitlistSection.attr('id', 'waitlistWell-' + i + 1)
+					$('#waitlist-section').append(waitlistSection);
+					let tableNumber = i + 1;
+					// Then display the remaining fields in the HTML (Section Name, Date, URL)
+					$("#waitlistWell-" + i + 1).append('<h2><span class="label label-primary">' + tableNumber + "</span> | " + waitlistData[i].customerID + "</h2>");
+				}
+			});
+	}
+	// This function resets all of the data in our tables. This is intended to let you restart a demo.
+const clearTables = () => {
+		const currentURL = window.location.origin;
+		$.ajax({ url: currentURL + "/clear", method: "POST" })
+	}
+	$("#clear").on('click', () => {
+		alert("Clearing...");
+		clearTables();
+		// Refresh the page after data is cleared
+		location.reload();
+  });
+  
+	// Run Queries!
+	$(document).on("ready", () => {
+		runTables();
+		runWaitlist();
+	});
 
   </script>
   

@@ -1,11 +1,9 @@
 // Dependencies
-// =============================================================
 const express = require("express");
 const bodyParser = require("body-parser");
 const path = require("path");
 
 // Sets up the Express App
-// =============================================================
 const app = express();
 const PORT = process.env.PORT || 3000;
 
@@ -13,54 +11,59 @@ const PORT = process.env.PORT || 3000;
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-// Star Wars Characters (DATA)
-// =============================================================
-const restaurant = [
-  {
-    routeName: "alex",
-    name: "Alex",
-    phone: "###-###-####",
-    email: "test@gmail.com",
-    uniqueID: 1
-  }
-];
+// Array pool for tables + waitlist
+const reservations = [];
 
 // Routes
-// =============================================================
 
-// Basic route that sends the user first to the AJAX Page
-app.get("/", function(req, res) {
-  res.sendFile(path.join(__dirname, "view.html"));
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "index.html"));
 });
 
-app.get("/reserve", function(req, res) {
+app.get("/reserve", (req, res) => {
   res.sendFile(path.join(__dirname, "reserve.html"));
 });
 
-app.get("/all", function(req, res) {
+app.get("/all", (req, res) => {
   res.sendFile(path.join(__dirname, "all.html"));
 });
 
-// Displays all characters
-app.get("/api/restaurant", function(req, res) {
-  return res.json(restaurant);
+
+app.post("/reservation", (req, res ) => {
+  var reservation = req.body;
+  reservations.push(reservation);
+  if (reservations.length <= 5){
+      res.send(true);
+  }
+  else {
+      res.send(false);
+  }
 });
 
-app.post("/api/restaurant", function(req, res) {
-  var newreservation = req.body;
-  newreservation.routeName = newreservation.name.replace(/\s+/g, "").toLowerCase();
-  console.log(newreservation);
-  restaurant.push(newreservation);
-  res.json(newreservation);
+app.get ("/tables", function ( req, res) {
+  // Array for 5 available tables
+  const tables = [];
+  for (let i = 0; i < 5 && i < reservations.length; i++) {
+      tables.push(reservations[i]);
+  }
+  res.json(tables);
 });
 
-app.listen(PORT, function() {
-  console.log("App listening on PORT " + PORT);
+app.get("/waitlist",function(req,res) {
+  // Array for waitlist
+  var waitlist = [];
+  for(let i = 5; i < reservations.length; i++) {
+      waitlist.push(reservations[i]);
+  }
+  res.json(waitlist);
 });
 
+app.post("/clear",function(req,res){
+  console.log("clearing");
+  reservations = [];
+});
+// Listener
 
-// if (restaurant.length >= 4) {
-//   restaurant.splice(0,4);
-//   let newWait = newreservation.splice(0,4);
-//   waitlist.push(newWait);
-//  }
+app.listen(PORT, function(){
+  console.log("App listening on PORT" + PORT);
+});
