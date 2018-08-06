@@ -47,7 +47,7 @@ app.get ("/tables", (req, res) => {
 app.get("/waitlist", (req,res) => {
   // Array for waitlist
   const waitlist = [];
-  for(let i = 5; i < reservations.length; i++) {
+  for (let i = 5; i < reservations.length; i++) {
       waitlist.push(reservations[i]);
   }
   res.json(waitlist);
