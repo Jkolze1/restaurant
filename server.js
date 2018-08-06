@@ -40,7 +40,7 @@ app.post("/reservation", (req, res ) => {
   }
 });
 
-app.get ("/tables", function ( req, res) {
+app.get ("/tables", ( req, res) => {
   // Array for 5 available tables
   const tables = [];
   for (let i = 0; i < 5 && i < reservations.length; i++) {
@@ -49,21 +49,21 @@ app.get ("/tables", function ( req, res) {
   res.json(tables);
 });
 
-app.get("/waitlist",function(req,res) {
+app.get("/waitlist", (req,res) => {
   // Array for waitlist
-  var waitlist = [];
+  const waitlist = [];
   for(let i = 5; i < reservations.length; i++) {
       waitlist.push(reservations[i]);
   }
   res.json(waitlist);
 });
 
-app.post("/clear",function(req,res){
+app.post("/clear", (req,res) => {
   console.log("clearing");
   reservations = [];
 });
 // Listener
 
-app.listen(PORT, function(){
+app.listen(PORT, () => {
   console.log("App listening on PORT" + PORT);
 });
